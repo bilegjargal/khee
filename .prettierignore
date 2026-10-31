@@ -1,0 +1,15 @@
+# Generated
+pnpm-lock.yaml
+CHANGELOG.md
+dist/
+coverage/
+.turbo/
+storybook-static/
+
+# Owner-maintained docs, formatted by hand
+README.md
+docs/handoffs/
+
+# Private, untracked agent instructions
+CLAUDE.md
+AGENTS.md
