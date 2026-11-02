@@ -87,6 +87,31 @@ import type { ButtonProps } from "@khee/react";
 type PressEvent = Parameters<NonNullable<ButtonProps["onPress"]>>[0];
 ```
 
+## React Aria version
+
+`@khee/react` pins `react-aria-components` to an exact version, because its props and types are part of Khee's API.
+Every React Aria upgrade ships as a Khee release, and security fixes are released promptly.
+Upgrading Khee is the normal way to get a newer React Aria.
+
+**Emergency fallback:** if a React Aria security fix is out and you can't wait for a Khee release, force the version with your package manager's overrides.
+This runs a combination Khee hasn't tested, so remove the override once you upgrade Khee.
+
+```jsonc
+// package.json (npm)
+{ "overrides": { "react-aria-components": "<fixed version>" } }
+
+// package.json (Yarn)
+{ "resolutions": { "react-aria-components": "<fixed version>" } }
+```
+
+```yaml
+# pnpm-workspace.yaml (pnpm)
+overrides:
+  react-aria-components: "<fixed version>"
+```
+
+If the fix is in `react-aria` or `react-stately`, override those packages the same way.
+
 ## Theming
 
 Tokens come in two tiers:
@@ -210,6 +235,7 @@ The reasoning behind Khee's architecture is recorded as [architecture decision r
 - [Plain `tsc` builds](./docs/decisions/0007-plain-tsc-build.md), so `"use client"` and tree-shaking survive by construction.
 - [Trusted publishing and supply-chain hardening](./docs/decisions/0008-release-and-supply-chain.md), so there is no npm token to leak.
 - [A secured AI bug-fix workflow](./docs/decisions/0009-secured-ai-bug-fix-workflow.md), where an agent drafts fixes and a human merge is the only path to npm.
+- [An exact pin for React Aria Components](./docs/decisions/0010-exact-pin-react-aria-components.md), so its API only changes with a Khee release.
 
 ## Development
 
