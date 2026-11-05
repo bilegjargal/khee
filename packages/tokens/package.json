@@ -10,14 +10,16 @@
   ],
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    "./tokens.css": "./dist/tokens.css"
   },
+  "sideEffects": [
+    "./dist/tokens.css"
+  ],
   "scripts": {
-    "build": "tsc",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "build": "node scripts/build.ts",
+    "lint": "eslint . && stylelint \"**/*.css\"",
+    "typecheck": "tsc",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "check:contrast": "node scripts/check-contrast.ts"
   }
 }

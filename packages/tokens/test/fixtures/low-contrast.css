@@ -1,0 +1,28 @@
+/*
+ * Known-bad tokens for the contrast check. The default theme passes; the
+ * "faded" theme sets muted text too light to read on its surfaces, so the
+ * check must find that theme on its own and fail.
+ */
+
+:root {
+  --khee-gray-50: #ffffff;
+  --khee-gray-300: #d0d0d0;
+  --khee-gray-600: #595959;
+  --khee-gray-900: #111111;
+
+  --khee-color-background: var(--khee-gray-50);
+  --khee-color-surface: var(--khee-gray-50);
+  --khee-color-text: var(--khee-gray-900);
+  --khee-color-text-muted: var(--khee-gray-600);
+  --khee-color-border: var(--khee-gray-600);
+  --khee-color-primary: #1d4ed8;
+  --khee-color-primary-hover: #1e40af;
+  --khee-color-on-primary: var(--khee-gray-50);
+  --khee-color-danger: #b91c1c;
+  --khee-color-on-danger: var(--khee-gray-50);
+  --khee-color-focus-ring: #1d4ed8;
+}
+
+[data-theme="faded"] {
+  --khee-color-text-muted: var(--khee-gray-300);
+}

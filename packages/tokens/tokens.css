@@ -1,0 +1,139 @@
+/*
+ * Khee design tokens.
+ *
+ * Two tiers (ADR 0003):
+ * - Palette tokens (--khee-<hue>-<step>) hold raw values. Only semantic
+ *   tokens reference them.
+ * - Semantic tokens are what components and app themes use.
+ *
+ * Themes remap semantic tokens under [data-theme="..."] on the root element.
+ * Palette values are the same in every theme.
+ */
+
+@layer khee.reset, khee.tokens, khee.components;
+
+@layer khee.tokens {
+  :root {
+    color-scheme: light;
+
+    /* Palette: gray */
+    --khee-gray-50: #fcfcfd;
+    --khee-gray-100: #f3f4f6;
+    --khee-gray-200: #e4e7eb;
+    --khee-gray-300: #cdd2d9;
+    --khee-gray-400: #9ba3ae;
+    --khee-gray-500: #6b7380;
+    --khee-gray-600: #4f5763;
+    --khee-gray-700: #3b424d;
+    --khee-gray-800: #272d36;
+    --khee-gray-900: #181c23;
+    --khee-gray-950: #0e1116;
+
+    /* Palette: blue */
+    --khee-blue-50: #eff5ff;
+    --khee-blue-100: #dbe8fe;
+    --khee-blue-200: #bfd5fe;
+    --khee-blue-300: #93b8fd;
+    --khee-blue-400: #6096fa;
+    --khee-blue-500: #3b76f6;
+    --khee-blue-600: #2559e0;
+    --khee-blue-700: #1d47bf;
+    --khee-blue-800: #1e3c99;
+    --khee-blue-900: #1e3779;
+    --khee-blue-950: #172349;
+
+    /* Palette: red */
+    --khee-red-50: #fef2f2;
+    --khee-red-100: #fde3e3;
+    --khee-red-200: #fccbcb;
+    --khee-red-300: #f9a6a6;
+    --khee-red-400: #f37272;
+    --khee-red-500: #e94646;
+    --khee-red-600: #d02929;
+    --khee-red-700: #af1f1f;
+    --khee-red-800: #911d1d;
+    --khee-red-900: #781e1e;
+    --khee-red-950: #420b0b;
+
+    /* Semantic: color (light theme, the default) */
+    --khee-color-background: var(--khee-gray-100);
+    --khee-color-surface: var(--khee-gray-50);
+    --khee-color-text: var(--khee-gray-900);
+    --khee-color-text-muted: var(--khee-gray-600);
+    --khee-color-border: var(--khee-gray-500);
+    --khee-color-primary: var(--khee-blue-600);
+    --khee-color-primary-hover: var(--khee-blue-700);
+    --khee-color-on-primary: var(--khee-gray-50);
+    --khee-color-danger: var(--khee-red-600);
+    --khee-color-on-danger: var(--khee-gray-50);
+    --khee-color-focus-ring: var(--khee-blue-600);
+    --khee-color-overlay: color-mix(
+      in srgb,
+      var(--khee-gray-950) 50%,
+      transparent
+    );
+
+    /* Semantic: space */
+    --khee-space-xs: 0.25rem;
+    --khee-space-sm: 0.5rem;
+    --khee-space-md: 1rem;
+    --khee-space-lg: 1.5rem;
+
+    /* Semantic: radius */
+    --khee-radius-sm: 0.25rem;
+    --khee-radius-md: 0.5rem;
+    --khee-radius-full: 9999rem;
+
+    /* Semantic: typography */
+    --khee-font-family:
+      system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans",
+      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --khee-font-size-sm: 0.875rem;
+    --khee-font-size-md: 1rem;
+    --khee-font-size-lg: 1.25rem;
+    --khee-font-weight-medium: 500;
+
+    /* Semantic: shadow */
+    --khee-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+    --khee-shadow-lg:
+      0 8px 24px -4px rgb(0 0 0 / 0.16), 0 2px 6px -2px rgb(0 0 0 / 0.1);
+
+    /* Semantic: motion */
+    --khee-duration: 150ms;
+
+    /* Semantic: lines */
+    --khee-border-width: 1px;
+    --khee-focus-ring-width: 2px;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+
+    --khee-color-background: var(--khee-gray-950);
+    --khee-color-surface: var(--khee-gray-900);
+    --khee-color-text: var(--khee-gray-50);
+    --khee-color-text-muted: var(--khee-gray-400);
+    --khee-color-border: var(--khee-gray-500);
+    --khee-color-primary: var(--khee-blue-400);
+    --khee-color-primary-hover: var(--khee-blue-300);
+    --khee-color-on-primary: var(--khee-gray-950);
+    --khee-color-danger: var(--khee-red-400);
+    --khee-color-on-danger: var(--khee-gray-950);
+    --khee-color-focus-ring: var(--khee-blue-400);
+    --khee-color-overlay: color-mix(
+      in srgb,
+      var(--khee-gray-950) 70%,
+      transparent
+    );
+
+    --khee-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --khee-shadow-lg:
+      0 8px 24px -4px rgb(0 0 0 / 0.6), 0 2px 6px -2px rgb(0 0 0 / 0.4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --khee-duration: 0ms;
+    }
+  }
+}
