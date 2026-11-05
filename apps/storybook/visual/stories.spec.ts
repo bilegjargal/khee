@@ -3,9 +3,22 @@
 import { expect, test } from "@playwright/test";
 import { enabled, FOCUSABLE, openStory, stories } from "./stories.ts";
 
+/** Projects whose viewport stands in for zoomed-in browsers. */
+const REFLOW_PROJECTS = new Set(["zoom-200", "reflow-320"]);
+
 for (const story of stories) {
-  test(`${story.title}: ${story.name}`, async ({ page }) => {
+  test(`${story.title}: ${story.name}`, async ({ page }, testInfo) => {
     const root = await openStory(page, story.id);
+
+    if (REFLOW_PROJECTS.has(testInfo.project.name)) {
+      // WCAG 1.4.10: content reflows instead of scrolling sideways.
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - window.innerWidth,
+      );
+      expect(overflow, "horizontal overflow in CSS pixels").toBeLessThanOrEqual(
+        0,
+      );
+    }
 
     await expect(root).toHaveScreenshot(`${story.id}.png`);
 

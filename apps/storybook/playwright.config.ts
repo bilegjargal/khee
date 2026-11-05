@@ -48,5 +48,17 @@ export default defineConfig({
       testMatch: "stories.spec.ts",
       use: { viewport: { width: 1280, height: 720 }, forcedColors: "active" },
     },
+    {
+      // 1280 CSS pixels at 200% zoom. WCAG 1.4.4 resize text.
+      name: "zoom-200",
+      testMatch: "stories.spec.ts",
+      use: { viewport: { width: 640, height: 400 } },
+    },
+    {
+      // 1280 CSS pixels at 400% zoom. WCAG 1.4.10 reflow.
+      name: "reflow-320",
+      testMatch: "stories.spec.ts",
+      use: { viewport: { width: 320, height: 256 } },
+    },
   ],
 });
