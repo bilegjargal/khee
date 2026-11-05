@@ -1,3 +1,5 @@
+"use client";
+
 import {
   composeRenderProps,
   type ClassNameOrFunction,
