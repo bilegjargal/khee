@@ -6,7 +6,8 @@
     "jsx": "react-jsx",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": [],
-    "noEmit": true
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
-  "include": ["src", "vitest.config.ts"]
+  "include": ["src", "test", "vitest.config.ts"]
 }
