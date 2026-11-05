@@ -96,6 +96,10 @@ const preview: Preview = {
   decorators: [withThemeAndDirection],
   parameters: {
     layout: "centered",
+    a11y: {
+      // Any axe violation fails the story's test.
+      test: "error",
+    },
     docs: {
       container: DocsContainer,
     },
