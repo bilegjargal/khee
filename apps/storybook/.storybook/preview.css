@@ -1,0 +1,8 @@
+/* Canvas styles for stories and docs pages. Semantic tokens only. */
+@layer khee.storybook {
+  body {
+    background-color: var(--khee-color-background);
+    color: var(--khee-color-text);
+    font-family: var(--khee-font-family);
+  }
+}

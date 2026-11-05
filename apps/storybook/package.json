@@ -3,15 +3,25 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
-  },
   "scripts": {
-    "build": "tsc",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "dev": "storybook dev --port 6006 --no-open",
+    "build": "storybook build --output-dir storybook-static --quiet",
+    "lint": "eslint . && stylelint \".storybook/**/*.css\"",
+    "typecheck": "tsc",
+    "test": "vitest run && node --test \"stories/**/*.test.ts\"",
+    "test:visual": "node scripts/visual.ts"
+  },
+  "devDependencies": {
+    "@khee/react": "workspace:*",
+    "@khee/tokens": "workspace:*",
+    "@storybook/addon-a11y": "10.6.3",
+    "@storybook/addon-docs": "10.6.3",
+    "@storybook/addon-vitest": "10.6.3",
+    "@storybook/react-vite": "10.6.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "storybook": "10.6.3"
   }
 }

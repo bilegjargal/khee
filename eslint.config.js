@@ -3,6 +3,7 @@ import eslint from "@eslint/js";
 import { defineConfig } from "eslint/config";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
+import storybook from "eslint-plugin-storybook";
 import tseslint from "typescript-eslint";
 
 export default defineConfig(
@@ -46,8 +47,17 @@ export default defineConfig(
     extends: [reactHooks.configs.flat.recommended],
   },
   {
-    // Code that runs in the browser.
-    files: ["packages/react/src/**", "apps/next-app/**"],
+    // Story rules for story files, and the addon check for main.ts.
+    files: ["apps/storybook/{stories,.storybook}/**"],
+    extends: [storybook.configs["flat/recommended"]],
+  },
+  {
+    // Code that runs in the browser. Playwright specs pass callbacks to the page.
+    files: [
+      "packages/react/src/**",
+      "apps/next-app/**",
+      "apps/storybook/{.storybook,stories,visual}/**",
+    ],
     languageOptions: {
       globals: globals.browser,
     },
