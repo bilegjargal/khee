@@ -5,6 +5,8 @@ dist/
 coverage/
 .turbo/
 storybook-static/
+test-results/
+playwright-report/
 .next/
 
 # Owner-maintained docs, formatted by hand

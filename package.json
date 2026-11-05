@@ -13,6 +13,7 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "test:a11y": "turbo run test --filter=@khee/storybook",
+    "test:visual": "turbo run test:visual",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

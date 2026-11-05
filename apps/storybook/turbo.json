@@ -4,6 +4,10 @@
   "tasks": {
     "test": {
       "dependsOn": ["^build", "build"]
+    },
+    "test:visual": {
+      "dependsOn": ["build"],
+      "cache": false
     }
   }
 }

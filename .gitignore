@@ -4,6 +4,8 @@ node_modules/
 # Build output
 dist/
 storybook-static/
+test-results/
+playwright-report/
 coverage/
 .turbo/
 *.tsbuildinfo
