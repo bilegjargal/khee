@@ -117,3 +117,64 @@ describe("khee/no-palette-outside-tokens", () => {
     );
   });
 });
+
+describe("khee/require-layer", () => {
+  const rule = "khee/require-layer";
+
+  it("accepts rules inside a khee.* layer", async () => {
+    assert.deepEqual(
+      await lint(
+        rule,
+        "@layer khee.components { .khee-x { color: var(--khee-color-text); } @media (forced-colors: active) { .khee-x { color: ButtonText; } } }",
+      ),
+      [],
+    );
+  });
+
+  it("accepts comments, @import, and @layer statements at the top level", async () => {
+    assert.deepEqual(
+      await lint(
+        rule,
+        '/* note */\n@layer khee.reset, khee.tokens, khee.components;\n@import "./button.css";',
+      ),
+      [],
+    );
+  });
+
+  it("flags an unlayered rule", async () => {
+    const warnings = await lint(rule, ".khee-x { color: red; }");
+    assert.equal(warnings.length, 1);
+    assert.equal(warnings[0]?.rule, rule);
+  });
+
+  it("flags an unlayered at-rule block", async () => {
+    const warnings = await lint(
+      rule,
+      "@media (forced-colors: active) { .khee-x { color: ButtonText; } }",
+    );
+    assert.equal(warnings.length, 1);
+  });
+
+  it("flags a layer outside the khee namespace", async () => {
+    assert.equal(
+      (await lint(rule, "@layer app { .khee-x { color: red; } }")).length,
+      1,
+    );
+    assert.equal(
+      (await lint(rule, "@layer khee { .khee-x { color: red; } }")).length,
+      1,
+    );
+    assert.equal(
+      (await lint(rule, "@layer { .khee-x { color: red; } }")).length,
+      1,
+    );
+  });
+
+  it("passes on tokens.css", async () => {
+    const { results } = await stylelint.lint({
+      files: tokensPath,
+      config: { plugins: [pluginPath], rules: { [rule]: true } },
+    });
+    assert.deepEqual(results[0]?.warnings, []);
+  });
+});

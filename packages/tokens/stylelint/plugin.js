@@ -89,7 +89,46 @@ const noPaletteOutsideTokens = (primary) => (root, result) => {
 noPaletteOutsideTokens.ruleName = noPaletteName;
 noPaletteOutsideTokens.messages = noPaletteMessages;
 
+const requireLayerName = "khee/require-layer";
+const requireLayerMessages = ruleMessages(requireLayerName, {
+  rejected:
+    "Expected rules and declarations to be inside an @layer khee.* block (ADR 0002).",
+});
+
+/**
+ * True for top-level nodes that are allowed outside a khee layer:
+ * comments, `@import`, `@layer` statements, and `@layer khee.*` blocks.
+ *
+ * @param {Root["nodes"][number]} node
+ */
+function isAllowedAtTopLevel(node) {
+  if (node.type === "comment") return true;
+  if (node.type !== "atrule") return false;
+  const name = node.name.toLowerCase();
+  if (name === "import") return true;
+  if (name !== "layer") return false;
+  if (node.nodes === undefined) return true;
+  return node.params.trim().startsWith("khee.");
+}
+
+/** @type {import("stylelint").Rule} */
+const requireLayer = (primary) => (root, result) => {
+  if (!validateOptions(result, requireLayerName, { actual: primary })) return;
+  for (const node of root.nodes) {
+    if (isAllowedAtTopLevel(node)) continue;
+    report({
+      ruleName: requireLayerName,
+      result,
+      node,
+      message: requireLayerMessages.rejected,
+    });
+  }
+};
+requireLayer.ruleName = requireLayerName;
+requireLayer.messages = requireLayerMessages;
+
 export default [
   createPlugin(noUnknownTokenName, noUnknownToken),
   createPlugin(noPaletteName, noPaletteOutsideTokens),
+  createPlugin(requireLayerName, requireLayer),
 ];

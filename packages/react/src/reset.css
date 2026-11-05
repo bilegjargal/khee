@@ -3,6 +3,8 @@
  * Skip it if your app already has one, such as Tailwind Preflight.
  * It lives in khee.reset, so any unlayered app CSS overrides it.
  */
+
+@layer khee.reset, khee.tokens, khee.components;
 @layer khee.reset {
   *,
   *::before,
