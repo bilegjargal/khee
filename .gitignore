@@ -6,6 +6,7 @@ dist/
 storybook-static/
 coverage/
 .turbo/
+*.tsbuildinfo
 
 # Environment
 .env
@@ -17,3 +18,7 @@ coverage/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Next.js
+.next/
+next-env.d.ts

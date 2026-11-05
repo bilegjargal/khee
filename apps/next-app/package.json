@@ -1,0 +1,22 @@
+{
+  "name": "@khee/next-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
+    "lint": "eslint . && stylelint \"app/**/*.css\"",
+    "typecheck": "NEXT_TELEMETRY_DISABLED=1 next typegen && tsc"
+  },
+  "dependencies": {
+    "@khee/react": "workspace:*",
+    "@khee/tokens": "workspace:*",
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0"
+  }
+}

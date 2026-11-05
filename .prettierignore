@@ -5,6 +5,7 @@ dist/
 coverage/
 .turbo/
 storybook-static/
+.next/
 
 # Owner-maintained docs, formatted by hand
 README.md
