@@ -9,10 +9,10 @@ Last reviewed: 2026-11-05
 ## Current stage
 
 **Phases 1 (workspace skeleton) and 2 (tokens) are done.** Tokens merged in [PR #4](https://github.com/bilegjargal/khee/pull/4).
-**Phase 3 of 6 (React package) is implemented on the `feat/react-package` branch, awaiting owner review.**
+**Phase 3 of 6 (React package) is done.**
 Architecture decisions (ADR 0001 to 0010) are recorded and the README is aligned with them.
 
-Verified on 2026-11-05, on the `feat/react-package` branch:
+Verified on 2026-11-05, on `main`:
 
 - Node `v26.5.0` matches `.nvmrc` (`26`), pnpm `12.14.0` matches `packageManager`.
 - Every acceptance command in handoff 03 passes from a fresh clone.
@@ -58,7 +58,7 @@ Follow-ups from Phase 2:
 
 ### Phase 3: React package setup (`@khee/react`)
 
-Implemented on `feat/react-package`, pending review.
+Done.
 
 - [x] Add `react-aria-components` as an exact-pinned `dependency` (ADR 0010).
 - [x] Add `react` and `react-dom` as caret-ranged `peerDependencies`.
@@ -76,8 +76,8 @@ Implemented on `feat/react-package`, pending review.
 
 Follow-ups from Phase 3:
 
-- [ ] Owner decision: should `@khee/tokens` be a `peerDependency` of `@khee/react`? Component CSS needs the tokens, but nothing declares it.
-- [ ] Owner decision: secondary Button hover and pressed use the `background` fill with a `text` border. Handoff 03 did not specify them.
+- [x] No `peerDependency` from `@khee/react` on `@khee/tokens`. Matching versions are the compatibility rule (ADR 0006).
+- [ ] Phase 5: revisit secondary Button hover and pressed (`background` fill, `text` border). Accepted for now; handoff 03 did not specify them.
 - [ ] Phase 6: CI must run `pnpm exec playwright install chromium` before `pnpm test`.
 
 ### Phase 4: Storybook (`apps/storybook`)
