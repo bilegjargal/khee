@@ -10,14 +10,15 @@
   ],
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    "./tokens.css": "./dist/tokens.css"
   },
+  "sideEffects": [
+    "./dist/tokens.css"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "node scripts/build.ts",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc",
+    "test": "node --test \"test/**/*.test.ts\""
   }
 }
