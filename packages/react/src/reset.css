@@ -1,0 +1,44 @@
+/*
+ * Optional modern reset for @khee/react.
+ * Skip it if your app already has one, such as Tailwind Preflight.
+ * It lives in khee.reset, so any unlayered app CSS overrides it.
+ */
+@layer khee.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-inline-size: 100%;
+  }
+}
