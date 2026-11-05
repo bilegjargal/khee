@@ -1,0 +1,14 @@
+/*
+ * Styles for stories shown on docs pages.
+ * Semantic tokens only, so they follow the theme like components do.
+ */
+@layer khee.storybook {
+  /* Each story on a docs page has its own theme and direction scope. */
+  .khee-sb-scope {
+    padding: var(--khee-space-md);
+    border-radius: var(--khee-radius-md);
+    background-color: var(--khee-color-background);
+    color: var(--khee-color-text);
+    font-family: var(--khee-font-family);
+  }
+}
