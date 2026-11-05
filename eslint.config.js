@@ -2,11 +2,18 @@
 import eslint from "@eslint/js";
 import { defineConfig } from "eslint/config";
 import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
 export default defineConfig(
   {
-    ignores: ["**/dist/", "**/coverage/", "**/.turbo/", "**/storybook-static/"],
+    ignores: [
+      "**/dist/",
+      "**/coverage/",
+      "**/.turbo/",
+      "**/.next/",
+      "**/storybook-static/",
+    ],
   },
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
@@ -32,6 +39,17 @@ export default defineConfig(
           ],
         },
       ],
+    },
+  },
+  {
+    files: ["**/*.tsx"],
+    extends: [reactHooks.configs.flat.recommended],
+  },
+  {
+    // Code that runs in the browser.
+    files: ["packages/react/src/**", "apps/next-app/**"],
+    languageOptions: {
+      globals: globals.browser,
     },
   },
   {
