@@ -4,30 +4,32 @@ Working task list derived from the README roadmap, `CLAUDE.md`, the ADRs in `doc
 The README describes the target end state; this file tracks how far we are from it.
 Each phase below should get its own handoff in `docs/handoffs/` before work starts.
 
-Last reviewed: 2026-11-01
+Last reviewed: 2026-11-05
 
 ## Current stage
 
 **Phase 1 of 6 (workspace skeleton) is done.**
+**Phase 2 of 6 (tokens) is implemented in [PR #4](https://github.com/bilegjargal/khee/pull/4), awaiting owner review.**
 Architecture decisions (ADR 0001 to 0010) are recorded and the README is aligned with them.
 
-Verified on 2026-11-01:
+Verified on 2026-11-05, on the `feat/tokens` branch:
 
 - Node `v26.5.0` matches `.nvmrc` (`26`), pnpm `12.14.0` matches `packageManager`.
-- `pnpm lint`, `pnpm typecheck`, and `pnpm format:check` pass.
-- Three placeholder workspaces exist: `@khee/tokens`, `@khee/react`, `@khee/storybook`.
-- No `.github/`, `.changeset/`, `apps/next-app/`, `CONTRIBUTING.md`, or real package content yet.
+- Every acceptance command in handoff 02 passes from a fresh clone.
+- `@khee/tokens` is a CSS-only package with `tokens.css`, a contrast check, and Stylelint token rules.
+- `@khee/react` and `@khee/storybook` are still placeholders.
+- No `.github/`, `.changeset/`, `apps/next-app/`, `CONTRIBUTING.md`, or components yet.
 
-None of the README roadmap items are done yet.
+Handoff 03 (React package) is drafted locally but not committed.
 
 ## Before Phase 2: reconcile the plan with the ADRs
 
 Handoff 01 was written before the ADRs and describes later phases differently from what was decided.
 These need an owner decision or a new handoff, not a silent fix.
 
-- [ ] Write handoffs 02 to 06. Handoff 01's out-of-scope list mentions "Style Dictionary, or any token build" for Phase 2 and "tsup or Vite library build" for Phase 3, which contradict ADR 0003 (hand-written `tokens.css`, no build) and ADR 0007 (plain `tsc`).
-- [ ] Switch published packages to `"module": "NodeNext"` and `"moduleResolution": "NodeNext"` (ADR 0007). `tsconfig.base.json` currently uses `ESNext` and `bundler`, as Handoff 01 required. Decide whether the base changes or only the package tsconfigs override it.
-- [ ] Remove the JavaScript placeholder from `@khee/tokens`. ADR 0006 says it has no JavaScript runtime, so its `exports` should point to `tokens.css` only, and its `build`, `lint`, and `typecheck` scripts need rethinking.
+- [ ] Write handoffs 02 to 06. Handoff 02 is merged and handoff 03 is drafted; 04 to 06 remain. Handoff 01's out-of-scope list mentions "Style Dictionary, or any token build" for Phase 2 and "tsup or Vite library build" for Phase 3, which contradict ADR 0003 (hand-written `tokens.css`, no build) and ADR 0007 (plain `tsc`).
+- [ ] Switch published packages to `"module": "NodeNext"` and `"moduleResolution": "NodeNext"` (ADR 0007). Handoffs 02 and 03 override it per package; the base keeps `ESNext` and `bundler`. `@khee/tokens` does this as of PR #4; `@khee/react` follows in Phase 3.
+- [x] Remove the JavaScript placeholder from `@khee/tokens`. ADR 0006 says it has no JavaScript runtime, so its `exports` should point to `tokens.css` only, and its `build`, `lint`, and `typecheck` scripts need rethinking.
 - [ ] Decide the order of Phase 5 (components) and Phase 6 (CI and release). Roadmap v0.1 includes CI and the release pipeline, but Handoff 01 numbers them last, after components.
 - [ ] Minor: ADR 0008 says "no bypass for bots or apps", while `CLAUDE.md` says "no bypass actors other than the owner". Confirm they mean the same thing.
 
@@ -35,15 +37,24 @@ These need an owner decision or a new handoff, not a silent fix.
 
 ### Phase 2: Tokens (`@khee/tokens`)
 
-- [ ] Hand-write `packages/tokens/tokens.css` in the `khee.tokens` cascade layer.
-- [ ] Palette tier: raw color scales, spacing, radii, typography, shadows, durations (`--khee-blue-600`, ...).
-- [ ] Semantic tier: roughly 20 to 30 names (`--khee-color-primary`, `--khee-color-on-primary`, `--khee-color-surface`, `--khee-color-border`, `--khee-radius-md`, ...).
-- [ ] Light theme as the default, dark theme under `[data-theme="dark"]`.
-- [ ] Document foreground/background semantic pairs that must meet WCAG 2.2 AA contrast.
-- [ ] `package.json`: `exports` for `./tokens.css`, `sideEffects` listing only CSS, copy CSS to `dist/` as-is, no install scripts.
-- [ ] Stylelint config that flags any `var(--khee-*)` not defined in `tokens.css`, enforces logical properties, and the `khee` prefix.
-- [ ] Contrast check script for every documented pair in every theme, runnable locally and in CI.
-- [ ] Package README for `@khee/tokens`.
+Implemented in PR #4, pending review.
+
+- [x] Hand-write `packages/tokens/tokens.css` in the `khee.tokens` cascade layer.
+- [x] Palette tier: raw color scales (`gray`, `blue`, `red`, 50 to 950). Spacing, radii, typography, shadows, and durations are semantic tokens with direct values instead, per handoff 02.
+- [x] Semantic tier: 29 names (`--khee-color-primary`, `--khee-color-on-primary`, `--khee-color-surface`, `--khee-color-border`, `--khee-radius-md`, ...).
+- [x] Light theme as the default, dark theme under `[data-theme="dark"]`.
+- [x] Document foreground/background semantic pairs that must meet WCAG 2.2 AA contrast (`contrast-pairs.json`).
+- [x] `package.json`: `exports` for `./tokens.css`, `sideEffects` listing only CSS, copy CSS to `dist/` as-is, no install scripts.
+- [x] Stylelint config that flags any `var(--khee-*)` not defined in `tokens.css`, enforces logical properties, and the `khee` prefix.
+- [x] Contrast check script for every documented pair in every theme, runnable locally (`pnpm --filter @khee/tokens check:contrast`). CI wiring comes in Phase 6.
+- [x] Package README for `@khee/tokens`.
+
+Follow-ups from Phase 2:
+
+- [ ] Owner decision: light theme has no pure white, so `surface` is `gray-50` (#fcfcfd) on a `gray-100` page background.
+- [ ] Phase 5: consider a softer divider token, since `--khee-color-border` must reach 3:1 and is a mid gray.
+- [ ] Add `tsconfig.base.json` as a Turborepo `typecheck` input, so base config edits do not replay cached results.
+- [ ] Consider pnpm `minimumReleaseAge` to enforce the 14-day dependency rule automatically.
 
 ### Phase 3: React package setup (`@khee/react`)
 
@@ -73,7 +84,7 @@ These need an owner decision or a new handoff, not a silent fix.
 
 ### Phase 6: CI and release
 
-- [ ] PR workflow: lint, typecheck, test, a11y, `"use client"` check, contrast check, Next.js app build.
+- [ ] PR workflow: lint, typecheck, test, a11y, `"use client"` check, contrast check (`check:contrast` exists), Next.js app build.
 - [ ] Visual regression workflow, run only when CSS, components, or stories change.
 - [ ] Read-only `permissions:`, no secrets, no `pull_request_target`, every Action pinned to a full commit SHA.
 - [ ] Dependency caching on standard GitHub-hosted runners.
@@ -123,6 +134,7 @@ Each component ships with stories for every variant, size, and state, unit and k
 ## Docs and repo housekeeping
 
 - [ ] `CONTRIBUTING.md` (short guide, required by `CLAUDE.md`).
+- [ ] Root README Theming example uses `--khee-radius-md: 10px` (tokens use `rem`) and overrides `primary` without `primary-hover`.
 - [ ] README placeholders: Storybook and npm links are `#`, and the Changelog link points to a `CHANGELOG.md` that Changesets will create on the first release.
 - [ ] README lists `pnpm test:a11y` and a `dev` script that runs Storybook; neither works yet.
 - [ ] `package.json` metadata for published packages: `description`, `repository`, `homepage`, `bugs`, `keywords`.
