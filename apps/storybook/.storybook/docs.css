@@ -1,5 +1,5 @@
 /*
- * Styles for the docs page template and the status badge.
+ * Styles for the docs page template, the status badge, and story layouts.
  * Semantic tokens only, so they follow the theme like components do.
  */
 @layer khee.storybook {
@@ -37,5 +37,13 @@
     color: var(--khee-color-text);
     font-family: var(--khee-font-family);
     font-size: var(--khee-font-size-sm);
+  }
+
+  /* Lays out several components side by side, wrapping on narrow screens. */
+  .khee-sb-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--khee-space-sm);
   }
 }
