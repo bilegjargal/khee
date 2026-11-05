@@ -8,27 +8,27 @@ Last reviewed: 2026-11-05
 
 ## Current stage
 
-**Phase 1 of 6 (workspace skeleton) is done.**
-**Phase 2 of 6 (tokens) is implemented in [PR #4](https://github.com/bilegjargal/khee/pull/4), awaiting owner review.**
+**Phases 1 (workspace skeleton) and 2 (tokens) are done.** Tokens merged in [PR #4](https://github.com/bilegjargal/khee/pull/4).
+**Phase 3 of 6 (React package) is implemented on the `feat/react-package` branch, awaiting owner review.**
 Architecture decisions (ADR 0001 to 0010) are recorded and the README is aligned with them.
 
-Verified on 2026-11-05, on the `feat/tokens` branch:
+Verified on 2026-11-05, on the `feat/react-package` branch:
 
 - Node `v26.5.0` matches `.nvmrc` (`26`), pnpm `12.14.0` matches `packageManager`.
-- Every acceptance command in handoff 02 passes from a fresh clone.
+- Every acceptance command in handoff 03 passes from a fresh clone.
 - `@khee/tokens` is a CSS-only package with `tokens.css`, a contrast check, and Stylelint token rules.
-- `@khee/react` and `@khee/storybook` are still placeholders.
-- No `.github/`, `.changeset/`, `apps/next-app/`, `CONTRIBUTING.md`, or components yet.
-
-Handoff 03 (React package) is drafted locally but not committed.
+- `@khee/react` builds with plain `tsc`, ships Button (experimental), and is tested in Vitest browser mode.
+- `apps/next-app` renders Button from server components.
+- `@khee/storybook` is still a placeholder.
+- No `.github/`, `.changeset/`, `CONTRIBUTING.md`, or components other than Button yet.
 
 ## Before Phase 2: reconcile the plan with the ADRs
 
 Handoff 01 was written before the ADRs and describes later phases differently from what was decided.
 These need an owner decision or a new handoff, not a silent fix.
 
-- [ ] Write handoffs 02 to 06. Handoff 02 is merged and handoff 03 is drafted; 04 to 06 remain. Handoff 01's out-of-scope list mentions "Style Dictionary, or any token build" for Phase 2 and "tsup or Vite library build" for Phase 3, which contradict ADR 0003 (hand-written `tokens.css`, no build) and ADR 0007 (plain `tsc`).
-- [ ] Switch published packages to `"module": "NodeNext"` and `"moduleResolution": "NodeNext"` (ADR 0007). Handoffs 02 and 03 override it per package; the base keeps `ESNext` and `bundler`. `@khee/tokens` does this as of PR #4; `@khee/react` follows in Phase 3.
+- [ ] Write handoffs 02 to 06. Handoffs 02 and 03 are committed; 04 to 06 remain. Handoff 01's out-of-scope list mentions "Style Dictionary, or any token build" for Phase 2 and "tsup or Vite library build" for Phase 3, which contradict ADR 0003 (hand-written `tokens.css`, no build) and ADR 0007 (plain `tsc`).
+- [x] Switch published packages to `"module": "NodeNext"` and `"moduleResolution": "NodeNext"` (ADR 0007). Each package overrides it; the base keeps `ESNext` and `bundler`, which `apps/next-app` uses.
 - [x] Remove the JavaScript placeholder from `@khee/tokens`. ADR 0006 says it has no JavaScript runtime, so its `exports` should point to `tokens.css` only, and its `build`, `lint`, and `typecheck` scripts need rethinking.
 - [ ] Decide the order of Phase 5 (components) and Phase 6 (CI and release). Roadmap v0.1 includes CI and the release pipeline, but Handoff 01 numbers them last, after components.
 - [ ] Minor: ADR 0008 says "no bypass for bots or apps", while `CLAUDE.md` says "no bypass actors other than the owner". Confirm they mean the same thing.
@@ -37,7 +37,7 @@ These need an owner decision or a new handoff, not a silent fix.
 
 ### Phase 2: Tokens (`@khee/tokens`)
 
-Implemented in PR #4, pending review.
+Merged in PR #4.
 
 - [x] Hand-write `packages/tokens/tokens.css` in the `khee.tokens` cascade layer.
 - [x] Palette tier: raw color scales (`gray`, `blue`, `red`, 50 to 950). Spacing, radii, typography, shadows, and durations are semantic tokens with direct values instead, per handoff 02.
@@ -58,17 +58,27 @@ Follow-ups from Phase 2:
 
 ### Phase 3: React package setup (`@khee/react`)
 
-- [ ] Add `react-aria-components` as an exact-pinned `dependency` (ADR 0010).
-- [ ] Add `react` and `react-dom` as caret-ranged `peerDependencies`.
-- [ ] NodeNext build with plain `tsc`, explicit `.js` extensions, one emitted file per module.
-- [ ] `exports` map for `.`, `./components.css`, and `./reset.css`; `sideEffects` lists only CSS.
-- [ ] `components.css` entry in `khee.components` and optional `reset.css` in `khee.reset`, both copied to `dist/` as-is.
-- [ ] Re-export common React Aria types: `PressEvent`, `Key`, `Selection`.
-- [ ] Shared helper for merging consumer `className` and `style`, including the render-function form.
-- [ ] React and a11y ESLint plugins (deferred from Phase 1).
-- [ ] Vitest and Testing Library setup for unit and keyboard interaction tests.
-- [ ] Check that every emitted `dist/` file for an interactive component starts with `"use client"`.
-- [ ] Private `apps/next-app` (Next.js App Router) that renders components from a server component.
+Implemented on `feat/react-package`, pending review.
+
+- [x] Add `react-aria-components` as an exact-pinned `dependency` (ADR 0010).
+- [x] Add `react` and `react-dom` as caret-ranged `peerDependencies`.
+- [x] NodeNext build with plain `tsc`, explicit `.js` extensions, one emitted file per module.
+- [x] `exports` map for `.`, `./components.css`, and `./reset.css`; `sideEffects` lists only CSS.
+- [x] `components.css` entry in `khee.components` and optional `reset.css` in `khee.reset`, both copied to `dist/` as-is.
+- [x] Re-export common React Aria types: `PressEvent`, `Key`, `Selection`.
+- [x] Shared helper for merging consumer `className`, including the render-function form. `style` passes through untouched, per handoff 03.
+- [x] React hooks ESLint plugin. No JSX a11y plugin, per handoff 03.
+- [x] Vitest browser mode (Playwright, headless Chromium) for unit and keyboard interaction tests.
+- [x] Check that every emitted `dist/` file for an interactive component starts with `"use client"`.
+- [x] Private `apps/next-app` (Next.js App Router) that renders components from a server component.
+- [x] Button as the pilot component, marked `experimental`.
+- [x] Stylelint `khee/require-layer` rule and hardcoded value bans for component CSS.
+
+Follow-ups from Phase 3:
+
+- [ ] Owner decision: should `@khee/tokens` be a `peerDependency` of `@khee/react`? Component CSS needs the tokens, but nothing declares it.
+- [ ] Owner decision: secondary Button hover and pressed use the `background` fill with a `text` border. Handoff 03 did not specify them.
+- [ ] Phase 6: CI must run `pnpm exec playwright install chromium` before `pnpm test`.
 
 ### Phase 4: Storybook (`apps/storybook`)
 
