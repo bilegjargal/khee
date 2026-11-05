@@ -6,7 +6,14 @@
       "outputs": ["dist/**"]
     },
     "lint": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/eslint.config.js",
+        "$TURBO_ROOT$/stylelint.config.js",
+        "$TURBO_ROOT$/packages/tokens/stylelint/plugin.js",
+        "$TURBO_ROOT$/packages/tokens/tokens.css"
+      ]
     },
     "typecheck": {
       "dependsOn": ["^build"]
