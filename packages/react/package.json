@@ -25,7 +25,7 @@
   "scripts": {
     "build": "node scripts/build.ts",
     "lint": "eslint . && stylelint \"src/**/*.css\"",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p scripts",
+    "typecheck": "tsc && tsc -p scripts",
     "test": "vitest run && node --test \"scripts/**/*.test.ts\"",
     "check:use-client": "node scripts/check-use-client.ts"
   },

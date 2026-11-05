@@ -1,0 +1,18 @@
+import { playwright } from "@vitest/browser-playwright";
+import { defineConfig } from "vitest/config";
+
+// Tests run in real headless Chromium, so focus, keyboard, and layout behave
+// as they do for users. jsdom is not used.
+export default defineConfig({
+  test: {
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+    browser: {
+      enabled: true,
+      provider: playwright(),
+      headless: true,
+      instances: [{ browser: "chromium" }],
+      // Failure screenshots land next to the tests as untracked files.
+      screenshotFailures: false,
+    },
+  },
+});
