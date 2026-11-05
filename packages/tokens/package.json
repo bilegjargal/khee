@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build": "node scripts/build.ts",
-    "lint": "eslint .",
+    "lint": "eslint . && stylelint \"**/*.css\"",
     "typecheck": "tsc",
     "test": "node --test \"test/**/*.test.ts\""
   }

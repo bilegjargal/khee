@@ -18,6 +18,21 @@ export default defineConfig(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      // node:test's describe() and it() return promises the runner tracks itself.
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          allowForKnownSafeCalls: [
+            {
+              from: "package",
+              package: "node:test",
+              name: ["describe", "it", "test", "suite"],
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     // Plain JS config files are not part of any tsconfig project.
