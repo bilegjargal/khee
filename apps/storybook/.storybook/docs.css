@@ -1,5 +1,5 @@
 /*
- * Styles for stories shown on docs pages.
+ * Styles for the docs page template and the status badge.
  * Semantic tokens only, so they follow the theme like components do.
  */
 @layer khee.storybook {
@@ -10,5 +10,32 @@
     background-color: var(--khee-color-background);
     color: var(--khee-color-text);
     font-family: var(--khee-font-family);
+  }
+
+  .khee-sb-status {
+    display: inline-block;
+    margin-block: 0 var(--khee-space-md);
+    padding-block: var(--khee-space-xs);
+    padding-inline: var(--khee-space-sm);
+    border: var(--khee-border-width) solid var(--khee-color-border);
+    border-radius: var(--khee-radius-full);
+    background-color: var(--khee-color-surface);
+    color: var(--khee-color-text);
+    font-family: var(--khee-font-family);
+    font-size: var(--khee-font-size-sm);
+    font-weight: var(--khee-font-weight-medium);
+  }
+
+  /* Both opt out of Storybook's docs typography with .sb-unstyled. */
+  .khee-sb-notice {
+    margin-block: var(--khee-space-md) var(--khee-space-lg);
+    padding-block: var(--khee-space-sm);
+    padding-inline: var(--khee-space-md);
+    border: var(--khee-border-width) dashed var(--khee-color-border);
+    border-radius: var(--khee-radius-md);
+    background-color: var(--khee-color-surface);
+    color: var(--khee-color-text);
+    font-family: var(--khee-font-family);
+    font-size: var(--khee-font-size-sm);
   }
 }

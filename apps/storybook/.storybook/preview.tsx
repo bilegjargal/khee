@@ -6,6 +6,7 @@ import "./docs.css";
 import type { Decorator, Preview } from "@storybook/react-vite";
 import { type ReactNode, useLayoutEffect } from "react";
 import { DocsContainer } from "./docs-container.tsx";
+import { DocsPage } from "./docs-page.tsx";
 import {
   applyThemeAndDirection,
   type Direction,
@@ -102,6 +103,7 @@ const preview: Preview = {
     },
     docs: {
       container: DocsContainer,
+      page: DocsPage,
     },
   },
   tags: ["autodocs"],
