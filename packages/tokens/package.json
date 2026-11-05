@@ -19,6 +19,7 @@
     "build": "node scripts/build.ts",
     "lint": "eslint . && stylelint \"**/*.css\"",
     "typecheck": "tsc",
-    "test": "node --test \"test/**/*.test.ts\""
+    "test": "node --test \"test/**/*.test.ts\"",
+    "check:contrast": "node scripts/check-contrast.ts"
   }
 }

@@ -1,0 +1,92 @@
+[
+  {
+    "foreground": "--khee-color-text",
+    "background": "--khee-color-background",
+    "min": 4.5,
+    "use": "body text on the page"
+  },
+  {
+    "foreground": "--khee-color-text",
+    "background": "--khee-color-surface",
+    "min": 4.5,
+    "use": "body text on surfaces"
+  },
+  {
+    "foreground": "--khee-color-text-muted",
+    "background": "--khee-color-background",
+    "min": 4.5,
+    "use": "secondary text on the page"
+  },
+  {
+    "foreground": "--khee-color-text-muted",
+    "background": "--khee-color-surface",
+    "min": 4.5,
+    "use": "secondary text on surfaces"
+  },
+  {
+    "foreground": "--khee-color-on-primary",
+    "background": "--khee-color-primary",
+    "min": 4.5,
+    "use": "primary button label"
+  },
+  {
+    "foreground": "--khee-color-on-primary",
+    "background": "--khee-color-primary-hover",
+    "min": 4.5,
+    "use": "primary button label on hover"
+  },
+  {
+    "foreground": "--khee-color-on-danger",
+    "background": "--khee-color-danger",
+    "min": 4.5,
+    "use": "danger button label"
+  },
+  {
+    "foreground": "--khee-color-danger",
+    "background": "--khee-color-background",
+    "min": 4.5,
+    "use": "error text on the page"
+  },
+  {
+    "foreground": "--khee-color-danger",
+    "background": "--khee-color-surface",
+    "min": 4.5,
+    "use": "error text on surfaces"
+  },
+  {
+    "foreground": "--khee-color-primary",
+    "background": "--khee-color-background",
+    "min": 4.5,
+    "use": "links on the page"
+  },
+  {
+    "foreground": "--khee-color-primary",
+    "background": "--khee-color-surface",
+    "min": 4.5,
+    "use": "links on surfaces"
+  },
+  {
+    "foreground": "--khee-color-border",
+    "background": "--khee-color-background",
+    "min": 3,
+    "use": "input boundaries on the page (WCAG 1.4.11)"
+  },
+  {
+    "foreground": "--khee-color-border",
+    "background": "--khee-color-surface",
+    "min": 3,
+    "use": "input boundaries on surfaces (WCAG 1.4.11)"
+  },
+  {
+    "foreground": "--khee-color-focus-ring",
+    "background": "--khee-color-background",
+    "min": 3,
+    "use": "focus indicator on the page (WCAG 1.4.11)"
+  },
+  {
+    "foreground": "--khee-color-focus-ring",
+    "background": "--khee-color-surface",
+    "min": 3,
+    "use": "focus indicator on surfaces (WCAG 1.4.11)"
+  }
+]
