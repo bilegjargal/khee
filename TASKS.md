@@ -9,17 +9,19 @@ Last reviewed: 2026-11-05
 ## Current stage
 
 **Phases 1 (workspace skeleton) and 2 (tokens) are done.** Tokens merged in [PR #4](https://github.com/bilegjargal/khee/pull/4).
-**Phase 3 of 6 (React package) is done.**
+**Phase 3 (React package) is done.**
+**Phase 4 of 6 (Storybook) is done**, committed directly to `main`.
 Architecture decisions (ADR 0001 to 0010) are recorded and the README is aligned with them.
 
 Verified on 2026-11-05, on `main`:
 
 - Node `v26.5.0` matches `.nvmrc` (`26`), pnpm `12.14.0` matches `packageManager`.
-- Every acceptance command in handoff 03 passes from a fresh clone.
+- Every acceptance command in handoffs 03 and 04 passes from a fresh clone.
 - `@khee/tokens` is a CSS-only package with `tokens.css`, a contrast check, and Stylelint token rules.
 - `@khee/react` builds with plain `tsc`, ships Button (experimental), and is tested in Vitest browser mode.
 - `apps/next-app` renders Button from server components.
-- `@khee/storybook` is still a placeholder.
+- `apps/storybook` runs Storybook 10 with theme and direction toolbars, a docs page template, and status badges.
+- Every story runs in Vitest browser mode with axe (`pnpm test:a11y`). Visual regression runs in a pinned, digest-locked Playwright image (`pnpm test:visual`).
 - No `.github/`, `.changeset/`, `CONTRIBUTING.md`, or components other than Button yet.
 
 ## Before Phase 2: reconcile the plan with the ADRs
@@ -27,7 +29,7 @@ Verified on 2026-11-05, on `main`:
 Handoff 01 was written before the ADRs and describes later phases differently from what was decided.
 These need an owner decision or a new handoff, not a silent fix.
 
-- [ ] Write handoffs 02 to 06. Handoffs 02 and 03 are committed; 04 to 06 remain. Handoff 01's out-of-scope list mentions "Style Dictionary, or any token build" for Phase 2 and "tsup or Vite library build" for Phase 3, which contradict ADR 0003 (hand-written `tokens.css`, no build) and ADR 0007 (plain `tsc`).
+- [ ] Write handoffs 02 to 06. Handoffs 02 to 04 are committed; 05 and 06 remain. Handoff 01's out-of-scope list mentions "Style Dictionary, or any token build" for Phase 2 and "tsup or Vite library build" for Phase 3, which contradict ADR 0003 (hand-written `tokens.css`, no build) and ADR 0007 (plain `tsc`).
 - [x] Switch published packages to `"module": "NodeNext"` and `"moduleResolution": "NodeNext"` (ADR 0007). Each package overrides it; the base keeps `ESNext` and `bundler`, which `apps/next-app` uses.
 - [x] Remove the JavaScript placeholder from `@khee/tokens`. ADR 0006 says it has no JavaScript runtime, so its `exports` should point to `tokens.css` only, and its `build`, `lint`, and `typecheck` scripts need rethinking.
 - [ ] Decide the order of Phase 5 (components) and Phase 6 (CI and release). Roadmap v0.1 includes CI and the release pipeline, but Handoff 01 numbers them last, after components.
@@ -82,15 +84,28 @@ Follow-ups from Phase 3:
 
 ### Phase 4: Storybook (`apps/storybook`)
 
-- [ ] Install and configure Storybook for React, replacing the placeholder.
-- [ ] Theme switcher toolbar (light, dark) driven by `data-theme`.
-- [ ] LTR/RTL toggle driven by `dir`.
-- [ ] a11y addon with zero violations enforced in CI, wired to `pnpm test:a11y`.
-- [ ] `pnpm dev` runs Storybook, as the README states.
-- [ ] Docs page template with keyboard behavior and ARIA notes sections.
-- [ ] `experimental` / `stable` status badges.
-- [ ] Playwright visual regression against stories, run inside Docker for stable font rendering.
-- [ ] Forced-colors, 200% zoom, and `prefers-reduced-motion` coverage in stories or tests.
+Done.
+
+- [x] Install and configure Storybook for React, replacing the placeholder. Storybook 10.6.3 with `@storybook/react-vite`, configured by hand, rendering the packages from source.
+- [x] Theme switcher toolbar (light, dark) driven by `data-theme`. Docs pages switch Storybook's own docs theme too.
+- [x] LTR/RTL toggle driven by `dir`.
+- [x] Every story rendered in Vitest browser mode with axe; any violation fails, wired to `pnpm test:a11y`. CI wiring comes in Phase 6.
+- [x] `pnpm dev` runs Storybook, as the README states.
+- [x] Docs page template with keyboard behavior and ARIA notes sections, fed by typed `parameters.kheeDocs`.
+- [x] `experimental` / `stable` status badges, with a check that each component has exactly one status tag.
+- [x] Playwright visual regression against stories, with the browser in the pinned `linux/amd64` Playwright image. Baselines are committed.
+- [x] Forced colors (screenshots), 200% zoom and 320px reflow (screenshots and no horizontal overflow), text at 200%, and `prefers-reduced-motion` checks.
+
+Follow-ups from Phase 4:
+
+- [ ] Phase 5: Button's keyboard and ARIA docs content (currently "Not documented yet") and its `stable` review.
+- [ ] Phase 5: Button's JSDoc says "Status: experimental.", which repeats the docs page badge. Drop it in a future `@khee/react` change.
+- [ ] Phase 6: run visual regression in CI through `apps/storybook/scripts/visual.ts`, unchanged, with the same pinned `linux/amd64` image.
+- [ ] Phase 6: a `workflow_dispatch` job that regenerates baselines and uploads them as an artifact, as a fallback source of truth.
+- [ ] Phase 6: a smoke test that consumes the built `@khee/react` package in a Next.js app to cover the exports map (decide what it adds beyond `apps/next-app`).
+- [ ] Handoff template: the `pnpm dev` acceptance check uses `pkill -f "storybook dev"`, which leaves `turbo run dev` running.
+- [x] Owner decision: the Playwright container runs `npx playwright@<exact version> run-server` from npm on each run. Accepted; no derived image.
+- [ ] Upstream: Storybook's CLI prints a `module.register()` deprecation warning on Node 26.
 
 ### Phase 6: CI and release
 
@@ -146,5 +161,5 @@ Each component ships with stories for every variant, size, and state, unit and k
 - [ ] `CONTRIBUTING.md` (short guide, required by `CLAUDE.md`).
 - [ ] Root README Theming example uses `--khee-radius-md: 10px` (tokens use `rem`) and overrides `primary` without `primary-hover`.
 - [ ] README placeholders: Storybook and npm links are `#`, and the Changelog link points to a `CHANGELOG.md` that Changesets will create on the first release.
-- [ ] README lists `pnpm test:a11y` and a `dev` script that runs Storybook; neither works yet.
+- [x] README lists `pnpm test:a11y` and a `dev` script that runs Storybook. Both work since Phase 4.
 - [ ] `package.json` metadata for published packages: `description`, `repository`, `homepage`, `bugs`, `keywords`.
