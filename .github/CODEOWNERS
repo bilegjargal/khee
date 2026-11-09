@@ -1,0 +1,3 @@
+# The owner reviews every change to CI, release, and the release config.
+/.github/ @bilegjargal
+/.changeset/config.json @bilegjargal
