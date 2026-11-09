@@ -6,7 +6,7 @@
     gap: var(--khee-space-xs);
     margin: 0;
     padding-block: var(--khee-space-sm);
-    padding-inline: var(--khee-space-md);
+    padding-inline: var(--khee-space-lg);
     border: var(--khee-border-width) solid var(--khee-color-primary);
     border-radius: var(--khee-radius-md);
     background-color: var(--khee-color-primary);
