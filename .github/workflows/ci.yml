@@ -1,0 +1,130 @@
+# Checks every pull request and every push to main.
+# Read-only, no secrets, never pull_request_target (ADR 0008).
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Superseded PR runs are cancelled; runs on main always finish.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  TURBO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm format:check
+      - run: pnpm --filter @khee/react check:use-client
+      - run: pnpm --filter @khee/tokens check:contrast
+      - run: pnpm check:pack
+      - run: pnpm lint:workflows
+
+  changeset:
+    name: changeset
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      # The job always runs so it can be a required check. Pushes to main and
+      # the "Version packages" PR (which consumes the changesets) skip the check.
+      - name: Decide whether a changeset is required
+        id: decide
+        env:
+          EVENT: ${{ github.event_name }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if [ "$EVENT" = "pull_request" ] && [ "$HEAD_REF" != "changeset-release/main" ]; then
+            echo "required=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "required=false" >> "$GITHUB_OUTPUT"
+            echo "No changeset check for this run ($EVENT, ${HEAD_REF:-no head branch})."
+          fi
+      - if: steps.decide.outputs.required == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - if: steps.decide.outputs.required == 'true'
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - if: steps.decide.outputs.required == 'true'
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - if: steps.decide.outputs.required == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.decide.outputs.required == 'true'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: pnpm changeset status --since="origin/$BASE_REF"
+
+  visual:
+    name: visual
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # The job always runs so it can be a required check. The suite itself
+      # runs on every push to main, and on PRs that can change a screenshot.
+      - name: Decide whether visual regression is needed
+        id: decide
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          if [ "$EVENT" != "pull_request" ]; then
+            needed=true
+          elif git diff --name-only "origin/$BASE_REF...HEAD" |
+            grep -qE '^(packages/react/src/|packages/tokens/tokens\.css$|apps/storybook/|package\.json$|pnpm-lock\.yaml$|\.github/workflows/ci\.yml$)'; then
+            needed=true
+          else
+            needed=false
+            echo "No CSS, component, story, or tooling changes: visual regression is not needed."
+          fi
+          echo "needed=$needed" >> "$GITHUB_OUTPUT"
+      - if: steps.decide.outputs.needed == 'true'
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - if: steps.decide.outputs.needed == 'true'
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - if: steps.decide.outputs.needed == 'true'
+        run: pnpm install --frozen-lockfile
+      # Builds Storybook, then runs Playwright against the pinned linux/amd64
+      # browser image, through apps/storybook/scripts/visual.ts unchanged.
+      - if: steps.decide.outputs.needed == 'true'
+        run: pnpm test:visual
+      - if: failure() && steps.decide.outputs.needed == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: visual-diffs
+          path: apps/storybook/test-results/
+          retention-days: 7
