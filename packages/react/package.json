@@ -1,6 +1,24 @@
 {
   "name": "@khee/react",
   "version": "0.0.0",
+  "description": "Accessible React components for Khee, built on React Aria Components and styled with plain CSS.",
+  "keywords": [
+    "react",
+    "components",
+    "design-system",
+    "accessibility",
+    "react-aria",
+    "css"
+  ],
+  "homepage": "https://github.com/bilegjargal/khee/tree/main/packages/react#readme",
+  "bugs": {
+    "url": "https://github.com/bilegjargal/khee/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bilegjargal/khee.git",
+    "directory": "packages/react"
+  },
   "license": "MIT",
   "publishConfig": {
     "access": "public"

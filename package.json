@@ -9,15 +9,19 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "typecheck": "turbo run typecheck",
-    "test": "turbo run test",
+    "lint": "turbo run lint && eslint scripts",
+    "typecheck": "turbo run typecheck && tsc -p scripts",
+    "test": "turbo run test && node --test \"scripts/**/*.test.ts\"",
     "test:a11y": "turbo run test --filter=@khee/storybook",
     "test:visual": "turbo run test:visual",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "changeset": "changeset",
+    "check:pack": "node scripts/check-pack.ts",
+    "lint:workflows": "node scripts/lint-workflows.ts"
   },
   "devDependencies": {
+    "@changesets/cli": "3.0.3",
     "@eslint/js": "10.0.1",
     "@playwright/test": "1.64.1",
     "@types/node": "26.6.5",

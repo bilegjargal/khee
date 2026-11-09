@@ -1,6 +1,24 @@
 {
   "name": "@khee/tokens",
   "version": "0.0.0",
+  "description": "Design tokens for Khee as one plain CSS file, with light and dark themes and no JavaScript runtime.",
+  "keywords": [
+    "design-tokens",
+    "css",
+    "css-custom-properties",
+    "design-system",
+    "theming",
+    "dark-mode"
+  ],
+  "homepage": "https://github.com/bilegjargal/khee/tree/main/packages/tokens#readme",
+  "bugs": {
+    "url": "https://github.com/bilegjargal/khee/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bilegjargal/khee.git",
+    "directory": "packages/tokens"
+  },
   "license": "MIT",
   "publishConfig": {
     "access": "public"

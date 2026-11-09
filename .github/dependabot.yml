@@ -1,0 +1,71 @@
+# Dependency updates for the pnpm workspace and for GitHub Actions.
+#
+# Every update waits 14 days after release (CLAUDE.md: no versions published
+# in the last 14 days). Groups are named, never `patterns: ["*"]`: a wildcard
+# group makes Dependabot skip the cooldown for the whole group.
+#
+# Manual follow-ups Dependabot cannot do:
+# - A bump inside a published package (packages/*) needs a changeset, added by
+#   the owner. For react-aria-components, pick the bump by diffing the exported
+#   prop types of every wrapped component (see CLAUDE.md and ADR 0010).
+# - A playwright bump also needs the image tag and digest in
+#   apps/storybook/scripts/visual.ts, which fails loudly on a mismatch.
+# - The actionlint and zizmor image digests in scripts/lint-workflows.ts.
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directories:
+      - "/"
+      - "/apps/*"
+      - "/packages/*"
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 14
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: build
+      include: scope
+    groups:
+      # These packages release together and must share one version.
+      storybook:
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+          - "eslint-plugin-storybook"
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+      playwright:
+        patterns:
+          - "playwright"
+          - "@playwright/test"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/js"
+          - "typescript-eslint"
+          - "eslint-plugin-react-hooks"
+          - "globals"
+    # react-aria-components stays ungrouped on purpose: every upgrade is its
+    # own Khee release, versioned by its effect on our API.
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 14
+    commit-message:
+      prefix: ci
+      include: scope
