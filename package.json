@@ -17,7 +17,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "changeset": "changeset",
-    "check:pack": "node scripts/check-pack.ts"
+    "check:pack": "node scripts/check-pack.ts",
+    "lint:workflows": "node scripts/lint-workflows.ts"
   },
   "devDependencies": {
     "@changesets/cli": "3.0.3",
