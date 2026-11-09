@@ -9,14 +9,15 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "typecheck": "turbo run typecheck",
-    "test": "turbo run test",
+    "lint": "turbo run lint && eslint scripts",
+    "typecheck": "turbo run typecheck && tsc -p scripts",
+    "test": "turbo run test && node --test \"scripts/**/*.test.ts\"",
     "test:a11y": "turbo run test --filter=@khee/storybook",
     "test:visual": "turbo run test:visual",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "check:pack": "node scripts/check-pack.ts"
   },
   "devDependencies": {
     "@changesets/cli": "3.0.3",
