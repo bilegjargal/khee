@@ -1,5 +1,5 @@
 # Checks every pull request and every push to main.
-# Read-only, no secrets, never pull_request_target (ADR 0008).
+# Read-only, no secrets, and only the plain pull_request trigger (ADR 0008).
 name: CI
 
 on:
