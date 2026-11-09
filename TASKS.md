@@ -4,7 +4,7 @@ Working task list derived from the README roadmap, `CLAUDE.md`, the ADRs in `doc
 The README describes the target end state; this file tracks how far we are from it.
 Each phase below should get its own handoff in `docs/handoffs/` before work starts.
 
-Last reviewed: 2026-11-09
+Last reviewed: 2026-11-09 (CI test, do not merge)
 
 ## Current stage
 
