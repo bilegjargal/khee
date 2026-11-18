@@ -1,6 +1,6 @@
 {
   "name": "@khee/tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Design tokens for Khee as one plain CSS file, with light and dark themes and no JavaScript runtime.",
   "keywords": [
     "design-tokens",

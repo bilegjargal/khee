@@ -1,6 +1,6 @@
 {
   "name": "@khee/react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Accessible React components for Khee, built on React Aria Components and styled with plain CSS.",
   "keywords": [
     "react",
