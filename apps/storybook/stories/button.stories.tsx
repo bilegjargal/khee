@@ -24,9 +24,23 @@ const meta = {
       options: ["sm", "md"],
     },
   },
-  // Keyboard and ARIA content arrives with Button's stable review (Phase 5).
+  // Follows the WAI-ARIA APG button pattern.
   parameters: {
-    kheeDocs: {},
+    kheeDocs: {
+      keyboard: [
+        { keys: "Tab", action: "Moves focus to the button." },
+        { keys: "Shift + Tab", action: "Moves focus to the previous element." },
+        { keys: "Enter", action: "Activates the button." },
+        { keys: "Space", action: "Activates the button." },
+      ],
+      aria: [
+        "Renders a native <button>, so it has the implicit button role.",
+        "Its accessible name comes from its children. A button with no visible text needs an aria-label.",
+        'type defaults to "button", so it never submits a form by accident. Set type="submit" for a form\'s submit button.',
+        "isDisabled sets the native disabled attribute: the button is removed from the tab order, ignores presses, and is announced as dimmed or unavailable.",
+        "The focus ring shows only for keyboard focus (data-focus-visible), not for pointer presses.",
+      ],
+    },
   } satisfies KheeDocsParameters,
 } satisfies Meta<typeof Button>;
 

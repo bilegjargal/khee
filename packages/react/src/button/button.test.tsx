@@ -12,6 +12,13 @@ describe("Button", () => {
       .toBeInTheDocument();
   });
 
+  it('defaults to type="button", so it never submits a form', async () => {
+    const screen = await render(<Button>Save</Button>);
+    await expect
+      .element(screen.getByRole("button"))
+      .toHaveAttribute("type", "button");
+  });
+
   it("defaults to the primary variant and md size", async () => {
     const screen = await render(<Button>Save</Button>);
     const button = screen.getByRole("button");
@@ -135,6 +142,14 @@ describe("Button", () => {
   });
 
   describe("isDisabled", () => {
+    it("sets the native disabled attribute", async () => {
+      const screen = await render(<Button isDisabled>Save</Button>);
+      await expect.element(screen.getByRole("button")).toBeDisabled();
+      await expect
+        .element(screen.getByRole("button"))
+        .toHaveAttribute("disabled");
+    });
+
     it("is skipped by Tab", async () => {
       const screen = await render(
         <>
