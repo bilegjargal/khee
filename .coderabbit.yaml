@@ -1,0 +1,109 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+#
+# CodeRabbit review config.
+# Reviews are advisory: CI and the owner's merge remain the only gates (ADR 0009).
+# Changes to this file require the owner's review (see .github/CODEOWNERS).
+
+language: en-US
+
+reviews:
+  profile: chill
+  high_level_summary: true
+  poem: false
+  in_progress_fortune: false
+  sequence_diagrams: false
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    # Keep reviewing long-running PRs instead of pausing after a few commits.
+    auto_pause_after_reviewed_commits: 0
+    drafts: false
+
+  path_filters:
+    - "!pnpm-lock.yaml"
+    - "!**/CHANGELOG.md"
+    - "!**/dist/**"
+    - "!**/.turbo/**"
+    - "!**/node_modules/**"
+    - "!apps/storybook/visual/__screenshots__/**"
+
+  path_instructions:
+    - path: "packages/react/src/**"
+      instructions: |
+        Components are thin wrappers around React Aria Components primitives.
+        Flag any hand-rolled focus management, keyboard navigation, roving tabindex, or ARIA pattern that React Aria already provides.
+        Props must extend and pass through React Aria's props, refs must be forwarded, and the props type must be exported.
+        Consumer `className` and `style` must be merged, never replaced, including React Aria's render-function form.
+        Variants and states are data attributes; flag styling logic in JavaScript.
+        Interactive component files must start with the "use client" directive.
+        Relative imports need explicit `.js` extensions (NodeNext).
+        Flag `any` without an explanatory comment and any `@ts-ignore` (use `@ts-expect-error` with a reason).
+    - path: "**/*.css"
+      instructions: |
+        Plain CSS only: native nesting, custom properties, cascade layers.
+        All library CSS must be inside the `khee` layer (`khee.reset`, `khee.tokens`, `khee.components`).
+        Classes must be `.khee-<component>` and custom properties `--khee-*`; flag unprefixed globals.
+        Use logical properties only; flag physical `left`, `right`, `margin-left`, and similar.
+        Components must reference semantic tokens only, never palette tokens or hardcoded colors, spacing, radii, typography, shadows, or durations.
+        Prefer React Aria state attributes (`data-hovered`, `data-pressed`, `data-focus-visible`, ...) over pseudo-classes.
+        Animation must respect `prefers-reduced-motion`, and components must stay usable in `forced-colors` mode and at 200% zoom.
+        Flag fixed-width text containers, since labels must survive translation.
+    - path: "packages/tokens/tokens.css"
+      instructions: |
+        Renaming or removing a token is a major change.
+        Keep the semantic tier small; question any new token without a clear need.
+        New foreground/background pairs should be documented in `contrast-pairs.json`.
+    - path: ".github/**"
+      instructions: |
+        Every action must be pinned to a full commit SHA.
+        Every workflow must declare explicit least-privilege `permissions:`.
+        Flag `pull_request_target`, secrets in PR workflows, and `id-token: write` outside the release workflow on `main`.
+        Flag larger or self-hosted runners.
+    - path: "packages/*/package.json"
+      instructions: |
+        Flag any `install`, `preinstall`, `postinstall`, or `prepare` script.
+        `react-aria-components` must stay an exact-pinned dependency of `@khee/react`; any other runtime dependency needs an ADR.
+        `react` and `react-dom` are caret-ranged peer dependencies.
+        `sideEffects` must list only CSS files, and `exports` must stay explicit.
+    - path: ".changeset/*.md"
+      instructions: |
+        Check that the bump matches the change: patch for fixes with no API or visual contract change, minor for new components, props, or tokens, major for anything that breaks existing usage.
+        `@khee/tokens` and `@khee/react` are released together as a fixed group.
+    - path: "docs/decisions/**"
+      instructions: |
+        Accepted ADRs are not edited to change a decision; a new ADR must supersede them.
+
+  tools:
+    # Security and supply-chain scanners.
+    actionlint:
+      enabled: true
+    zizmor:
+      enabled: true
+    gitleaks:
+      enabled: true
+    osvScanner:
+      enabled: true
+    shellcheck:
+      enabled: true
+    yamllint:
+      enabled: true
+    # CI already runs these with the repo's own configs.
+    eslint:
+      enabled: false
+    stylelint:
+      enabled: false
+    biome:
+      enabled: false
+    # Conflict with the one-sentence-per-line Markdown style.
+    markdownlint:
+      enabled: false
+    languagetool:
+      enabled: false
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - CLAUDE.md
+      - docs/decisions/*.md
