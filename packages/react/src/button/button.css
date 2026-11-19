@@ -30,7 +30,11 @@
       background-color: var(--khee-color-surface);
       color: var(--khee-color-text);
 
-      &[data-hovered],
+      /* Hover softens the fill; pressed also strengthens the border. */
+      &[data-hovered] {
+        background-color: var(--khee-color-background);
+      }
+
       &[data-pressed] {
         border-color: var(--khee-color-text);
         background-color: var(--khee-color-background);

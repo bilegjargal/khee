@@ -141,6 +141,34 @@ describe("Button", () => {
     });
   });
 
+  describe("secondary states", () => {
+    const look = (element: Element) => {
+      const style = getComputedStyle(element);
+      return `${style.backgroundColor} / ${style.borderColor}`;
+    };
+
+    it("gives rest, hover, and pressed each their own look", async () => {
+      const screen = await render(
+        <Button variant="secondary" style={{ transitionDuration: "0s" }}>
+          Save
+        </Button>,
+      );
+      const button = screen.getByRole("button");
+      const rest = look(button.element());
+
+      await userEvent.hover(button);
+      await expect.element(button).toHaveAttribute("data-hovered");
+      const hover = look(button.element());
+
+      await commands.pointerDown(button.selector);
+      await expect.element(button).toHaveAttribute("data-pressed");
+      const pressed = look(button.element());
+      await commands.pointerUp();
+
+      expect(new Set([rest, hover, pressed]).size).toBe(3);
+    });
+  });
+
   describe("isDisabled", () => {
     it("sets the native disabled attribute", async () => {
       const screen = await render(<Button isDisabled>Save</Button>);
