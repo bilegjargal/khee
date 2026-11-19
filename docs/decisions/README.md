@@ -16,6 +16,7 @@ When a decision changes, a new record supersedes the old one, and the old one is
 | [0008](./0008-release-and-supply-chain.md)              | Trusted publishing and supply-chain hardening               | Accepted |
 | [0009](./0009-secured-ai-bug-fix-workflow.md)           | A secured, label-gated AI bug-fix workflow                  | Accepted |
 | [0010](./0010-exact-pin-react-aria-components.md) | Exact pin for `react-aria-components` | Accepted |
+| [0011](./0011-non-interactive-components.md) | Non-interactive components without React Aria | Accepted |
 
 ## Template
 
