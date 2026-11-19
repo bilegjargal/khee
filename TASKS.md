@@ -83,7 +83,7 @@ Done.
 Follow-ups from Phase 3:
 
 - [x] No `peerDependency` from `@khee/react` on `@khee/tokens`. Matching versions are the compatibility rule (ADR 0006).
-- [ ] Phase 6: revisit secondary Button hover and pressed (`background` fill, `text` border). Accepted for now; handoff 03 did not specify them. In handoff 06.
+- [x] Phase 6: revisit secondary Button hover and pressed. Hover now fills with `background`; pressed also takes a `text` border (handoff 06, PR 1).
 - [x] Phase 5: CI must run `pnpm exec playwright install chromium` before `pnpm test`.
 
 ### Phase 4: Storybook (`apps/storybook`)
@@ -102,8 +102,8 @@ Done.
 
 Follow-ups from Phase 4:
 
-- [ ] Phase 6: Button's keyboard and ARIA docs content (currently "Not documented yet"). In handoff 06. The `stable` review waits for the v1.0 screen reader passes (owner decision, 2026-11-19).
-- [ ] Phase 6: Button's JSDoc says "Status: experimental.", which repeats the docs page badge. In handoff 06.
+- [x] Phase 6: Button's keyboard and ARIA docs content (handoff 06, PR 1). The `stable` review waits for the v1.0 screen reader passes (owner decision, 2026-11-19).
+- [x] Phase 6: Button's JSDoc says "Status: experimental.", which repeats the docs page badge. Removed in handoff 06, PR 1.
 - [x] Phase 5: run visual regression in CI through `apps/storybook/scripts/visual.ts`, unchanged, with the same pinned `linux/amd64` image.
 - [x] Phase 5: a `workflow_dispatch` job that regenerates baselines and uploads them as an artifact, as a fallback source of truth.
 - [x] Phase 5: a smoke test of the built packages: packed tarball checks with an offline install and a NodeNext type-check, no Next.js build.
@@ -141,7 +141,7 @@ Each component ships with stories for every variant, size, and state, unit and k
 Specified in [handoff 06](docs/handoffs/06-core-components.md), as six PRs merged in order. `0.2.0` ships after PR 6.
 Owner decisions (2026-11-19): components stay `experimental` until v1.0, no `danger` Button variant, light `surface` stays `gray-50` until the token review, and non-interactive components are plain elements rendered as server components (ADR 0011).
 
-- [ ] PR 1: Button (docs content, JSDoc, secondary states, docs content check)
+- [x] PR 1: Button (docs content, JSDoc, secondary states, docs content check)
 - [ ] PR 2: Card, plus `--khee-color-border-subtle`
 - [ ] PR 3: Field parts and TextField, plus ADR 0012
 - [ ] PR 4: Dialog, plus portal support in the visual suite
