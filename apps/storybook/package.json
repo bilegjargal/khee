@@ -8,7 +8,7 @@
     "build": "storybook build --output-dir storybook-static --quiet",
     "lint": "eslint . && stylelint \".storybook/**/*.css\"",
     "typecheck": "tsc",
-    "test": "vitest run && node --test \"stories/**/*.test.ts\"",
+    "test": "vitest run && node --test stories/check-status-tags.test.ts",
     "test:visual": "node scripts/visual.ts"
   },
   "devDependencies": {
