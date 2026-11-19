@@ -26,6 +26,11 @@
     font-weight: var(--khee-font-weight-medium);
   }
 
+  /* Keyboard and ARIA sections, so a table never touches the next heading. */
+  .khee-sb-docs-section {
+    margin-block-end: var(--khee-space-lg);
+  }
+
   /* Both opt out of Storybook's docs typography with .sb-unstyled. */
   .khee-sb-notice {
     margin-block: var(--khee-space-md) var(--khee-space-lg);
