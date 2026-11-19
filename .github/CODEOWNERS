@@ -1,3 +1,5 @@
 # The owner reviews every change to CI, release, and the release config.
 /.github/ @bilegjargal
 /.changeset/config.json @bilegjargal
+# The owner reviews changes to the AI code reviewer's config.
+/.coderabbit.yaml @bilegjargal
