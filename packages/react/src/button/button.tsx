@@ -24,8 +24,6 @@ export interface ButtonProps extends AriaButtonProps {
 /**
  * A button built on React Aria's `Button`.
  * All React Aria props pass through, including `onPress` and `isDisabled`.
- *
- * Status: experimental.
  */
 export function Button({
   variant = "primary",

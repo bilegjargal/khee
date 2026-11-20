@@ -16,14 +16,19 @@ function NotDocumented() {
 
 function KeyboardSection({ keyboard }: { keyboard: KheeDocs["keyboard"] }) {
   return (
-    <section>
+    <section className="khee-sb-docs-section">
       <Heading>Keyboard</Heading>
       {keyboard?.length ? (
         <table>
           <thead>
             <tr>
-              <th scope="col">Keys</th>
-              <th scope="col">Action</th>
+              {/* Inline, since Storybook's unlayered docs styles center headers. */}
+              <th scope="col" style={{ textAlign: "start" }}>
+                Keys
+              </th>
+              <th scope="col" style={{ textAlign: "start" }}>
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -46,7 +51,7 @@ function KeyboardSection({ keyboard }: { keyboard: KheeDocs["keyboard"] }) {
 
 function AriaSection({ aria }: { aria: KheeDocs["aria"] }) {
   return (
-    <section>
+    <section className="khee-sb-docs-section">
       <Heading>ARIA</Heading>
       {aria?.length ? (
         <ul>
