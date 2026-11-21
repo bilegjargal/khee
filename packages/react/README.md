@@ -53,12 +53,46 @@ Every other prop passes through to React Aria's `Button` (`onPress`, `isDisabled
 
 Button is `experimental`: its API may change in a minor release until it is marked `stable`.
 
+## Card
+
+```tsx
+import { Button, Card } from "@khee/react";
+
+export function Example() {
+  return (
+    <Card role="region" aria-labelledby="billing-title">
+      <h2 id="billing-title">Billing</h2>
+      <p>Your next invoice is due on the first of the month.</p>
+      <div>
+        <Button>Pay now</Button>
+      </div>
+    </Card>
+  );
+}
+```
+
+Card has no props of its own: every `<div>` prop passes through (`role`, `aria-*`, `id`, ...).
+Your `className` is added after `khee-card`, `style` passes through, and `ref` points to the `<div>`.
+
+Card is a plain element with no `"use client"`, so it renders as a server component and ships no JavaScript.
+It stacks its children with a gap and stretches them to its width, so put buttons in their own row.
+Reset the margins of your own headings and paragraphs inside it, since the gap already spaces them.
+Add `role="region"` with a label, or use `<article>` or `<section>` content, when the card is a landmark.
+
+Card is `experimental`: its API may change in a minor release until it is marked `stable`.
+
 ## Types
 
 Import types from `@khee/react`, never from `react-aria-components`:
 
 ```ts
-import type { ButtonProps, Key, PressEvent, Selection } from "@khee/react";
+import type {
+  ButtonProps,
+  CardProps,
+  Key,
+  PressEvent,
+  Selection,
+} from "@khee/react";
 ```
 
 Every component exports its props type, and the React Aria types apps commonly need are re-exported.

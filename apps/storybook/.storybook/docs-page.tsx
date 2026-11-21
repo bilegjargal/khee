@@ -14,11 +14,21 @@ function NotDocumented() {
   return <p className="khee-sb-notice sb-unstyled">Not documented yet.</p>;
 }
 
+function NoKeyboardInteraction() {
+  return <p className="khee-sb-notice sb-unstyled">No keyboard interaction.</p>;
+}
+
+/**
+ * A missing `keyboard` list is not documented yet. An explicit empty list
+ * means the component is not interactive.
+ */
 function KeyboardSection({ keyboard }: { keyboard: KheeDocs["keyboard"] }) {
   return (
     <section className="khee-sb-docs-section">
       <Heading>Keyboard</Heading>
-      {keyboard?.length ? (
+      {keyboard?.length === 0 ? (
+        <NoKeyboardInteraction />
+      ) : keyboard?.length ? (
         <table>
           <thead>
             <tr>
