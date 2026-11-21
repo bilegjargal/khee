@@ -4,6 +4,7 @@ import {
   composeRenderProps,
   type ClassNameOrFunction,
 } from "react-aria-components";
+import { joinClassNames } from "./join-class-names.js";
 
 /**
  * Prepends a component's `khee-*` class to the consumer's `className`.
@@ -16,6 +17,6 @@ export function composeClassName<T>(
   className: ClassNameOrFunction<T> | undefined,
 ): ClassNameOrFunction<T> {
   return composeRenderProps(className, (consumerClassName) =>
-    consumerClassName ? `${kheeClassName} ${consumerClassName}` : kheeClassName,
+    joinClassNames(kheeClassName, consumerClassName),
   );
 }

@@ -58,7 +58,7 @@ Merged in PR #4.
 Follow-ups from Phase 2:
 
 - [ ] Owner decision: light theme has no pure white, so `surface` is `gray-50` (#fcfcfd) on a `gray-100` page background.
-- [ ] Phase 6: consider a softer divider token, since `--khee-color-border` must reach 3:1 and is a mid gray. In handoff 06 (`--khee-color-border-subtle`, Card PR).
+- [x] Phase 6: consider a softer divider token, since `--khee-color-border` must reach 3:1 and is a mid gray. In handoff 06 (`--khee-color-border-subtle`, Card PR).
 - [ ] Add `tsconfig.base.json` as a Turborepo `typecheck` input, so base config edits do not replay cached results.
 - [ ] Consider pnpm `minimumReleaseAge` to enforce the 14-day dependency rule automatically.
 
@@ -142,7 +142,7 @@ Specified in [handoff 06](docs/handoffs/06-core-components.md), as six PRs merge
 Owner decisions (2026-11-19): components stay `experimental` until v1.0, no `danger` Button variant, light `surface` stays `gray-50` until the token review, and non-interactive components are plain elements rendered as server components (ADR 0011).
 
 - [x] PR 1: Button (docs content, JSDoc, secondary states, docs content check)
-- [ ] PR 2: Card, plus `--khee-color-border-subtle`
+- [x] PR 2: Card, plus `--khee-color-border-subtle`
 - [ ] PR 3: Field parts and TextField, plus ADR 0012
 - [ ] PR 4: Dialog, plus portal support in the visual suite
 - [ ] PR 5: Select, Popover, and ListBox

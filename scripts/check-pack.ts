@@ -37,11 +37,13 @@ const TYPE_PACKAGES = ["@types/react", "@types/react-dom"];
 
 // The consumer fixture. It uses the components and the re-exported React Aria
 // types, so a broken .d.ts or a missing type re-export fails the check.
-const FIXTURE = `import { Button, type ButtonProps, type Key, type PressEvent, type Selection } from "@khee/react";
+const FIXTURE = `import { Button, Card, type ButtonProps, type CardProps, type Key, type PressEvent, type Selection } from "@khee/react";
 import type { ReactElement } from "react";
 
 const props: ButtonProps = { variant: "secondary", size: "sm", onPress: (event: PressEvent) => event.target };
 export const button: ReactElement = <Button {...props}>Save</Button>;
+const cardProps: CardProps = { role: "region", "aria-label": "Billing", className: "app-card" };
+export const card: ReactElement = <Card {...cardProps}>Content</Card>;
 export type ReExported = [Key, Selection];
 `;
 

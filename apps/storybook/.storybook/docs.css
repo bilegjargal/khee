@@ -44,6 +44,17 @@
     font-size: var(--khee-font-size-sm);
   }
 
+  /* App-owned content inside a Card. The card's gap does the spacing. */
+  .khee-sb-flush {
+    margin: 0;
+  }
+
+  .khee-sb-title {
+    margin: 0;
+    font-size: var(--khee-font-size-lg);
+    font-weight: var(--khee-font-weight-medium);
+  }
+
   /* Lays out several components side by side, wrapping on narrow screens. */
   .khee-sb-row {
     display: flex;

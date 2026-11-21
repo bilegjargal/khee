@@ -1,0 +1,26 @@
+@layer khee.components {
+  .khee-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--khee-space-md);
+    padding: var(--khee-space-lg);
+    border: var(--khee-border-width) solid var(--khee-color-border-subtle);
+    border-radius: var(--khee-radius-md);
+    background-color: var(--khee-color-surface);
+    color: var(--khee-color-text);
+    box-shadow: var(--khee-shadow-sm);
+
+    /*
+     * Long words wrap instead of overflowing narrow screens. "anywhere"
+     * rather than "break-word", because it also lowers the card's min-content
+     * width, so a card inside a flex or grid layout can shrink to the viewport
+     * instead of growing to fit its longest word.
+     */
+    overflow-wrap: anywhere;
+
+    /* Shadows disappear in forced colors, so the outline carries the shape. */
+    @media (forced-colors: active) {
+      border-color: CanvasText;
+    }
+  }
+}
