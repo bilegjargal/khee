@@ -35,13 +35,16 @@ Reference semantic tokens in your own CSS, not palette tokens, so your styles fo
 
 | Group      | Tokens                                                                                                                                                                                                                                                                                                       |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Color      | `--khee-color-background`, `--khee-color-surface`, `--khee-color-text`, `--khee-color-text-muted`, `--khee-color-border`, `--khee-color-primary`, `--khee-color-primary-hover`, `--khee-color-on-primary`, `--khee-color-danger`, `--khee-color-on-danger`, `--khee-color-focus-ring`, `--khee-color-overlay` |
+| Color      | `--khee-color-background`, `--khee-color-surface`, `--khee-color-text`, `--khee-color-text-muted`, `--khee-color-border`, `--khee-color-border-subtle`, `--khee-color-primary`, `--khee-color-primary-hover`, `--khee-color-on-primary`, `--khee-color-danger`, `--khee-color-on-danger`, `--khee-color-focus-ring`, `--khee-color-overlay` |
 | Space      | `--khee-space-xs`, `--khee-space-sm`, `--khee-space-md`, `--khee-space-lg`                                                                                                                                                                                                                                   |
 | Radius     | `--khee-radius-sm`, `--khee-radius-md`, `--khee-radius-full`                                                                                                                                                                                                                                                 |
 | Typography | `--khee-font-family`, `--khee-font-size-sm`, `--khee-font-size-md`, `--khee-font-size-lg`, `--khee-font-weight-medium`                                                                                                                                                                                       |
 | Shadow     | `--khee-shadow-sm`, `--khee-shadow-lg`                                                                                                                                                                                                                                                                       |
 | Motion     | `--khee-duration` (`0ms` when the user prefers reduced motion)                                                                                                                                                                                                                                               |
 | Lines      | `--khee-border-width`, `--khee-focus-ring-width`                                                                                                                                                                                                                                                             |
+
+`--khee-color-border` meets 3:1 against the page and surfaces, so use it for the boundaries of interactive controls.
+`--khee-color-border-subtle` is decorative, for card outlines and separators, and is not checked for contrast.
 
 ## Themes
 

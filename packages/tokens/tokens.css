@@ -61,6 +61,12 @@
     --khee-color-text: var(--khee-gray-900);
     --khee-color-text-muted: var(--khee-gray-600);
     --khee-color-border: var(--khee-gray-500);
+    /*
+     * Decorative outlines and separators only (cards, dividers). Not a
+     * contrast pair: interactive control boundaries use --khee-color-border,
+     * which meets 3:1.
+     */
+    --khee-color-border-subtle: var(--khee-gray-200);
     --khee-color-primary: var(--khee-blue-600);
     --khee-color-primary-hover: var(--khee-blue-700);
     --khee-color-on-primary: var(--khee-gray-50);
@@ -114,6 +120,7 @@
     --khee-color-text: var(--khee-gray-50);
     --khee-color-text-muted: var(--khee-gray-400);
     --khee-color-border: var(--khee-gray-500);
+    --khee-color-border-subtle: var(--khee-gray-800);
     --khee-color-primary: var(--khee-blue-400);
     --khee-color-primary-hover: var(--khee-blue-300);
     --khee-color-on-primary: var(--khee-gray-950);
