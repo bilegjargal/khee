@@ -10,8 +10,13 @@
     color: var(--khee-color-text);
     box-shadow: var(--khee-shadow-sm);
 
-    /* Long words wrap instead of overflowing narrow screens. */
-    overflow-wrap: break-word;
+    /*
+     * Long words wrap instead of overflowing narrow screens. "anywhere"
+     * rather than "break-word", because it also lowers the card's min-content
+     * width, so a card inside a flex or grid layout can shrink to the viewport
+     * instead of growing to fit its longest word.
+     */
+    overflow-wrap: anywhere;
 
     /* Shadows disappear in forced colors, so the outline carries the shape. */
     @media (forced-colors: active) {

@@ -59,6 +59,23 @@ describe("Card", () => {
       .toBeInTheDocument();
   });
 
+  // WCAG 1.4.10 Reflow. A flex or grid item never shrinks below its
+  // min-content width, so a long word must not set the card's width.
+  it("fits a narrow flex container despite a long word", async () => {
+    const screen = await render(
+      <div style={{ display: "flex", inlineSize: "200px" }}>
+        <Card data-testid="card">
+          <p>Datenschutzgrundverordnungskonformitätsprüfung</p>
+        </Card>
+      </div>,
+    );
+    const { width } = screen
+      .getByTestId("card")
+      .element()
+      .getBoundingClientRect();
+    expect(width).toBeLessThanOrEqual(200);
+  });
+
   it("is not a tab stop, so Tab moves straight to its content", async () => {
     const screen = await render(
       <Card>
